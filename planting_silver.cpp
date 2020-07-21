@@ -1,5 +1,8 @@
 // Brian Lu
-// After 15 mins *xxxxxxx** what?
+// 15 mins in *xxxxxxx** what?
+// 35 mins in *xxxxxxx** what?
+// 
+
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -13,25 +16,21 @@ int main()
     int N;
     FILE *input = fopen("planting.in", "r");
     fscanf(input, "%d", &N);
-    std::vector<int> fields[N];
+    int fields[N];
+    for (int i = 0; i < N; i++) {
+        fields[i] = 0;
+    }
     for (int i = 0; i < N; i++) {
         int f1, f2;
-        fscanf(input, "%d %d", &f1, &f2);
-        fields[f1-1].push_back(f2-1);
-        fields[f2-1].push_back(f1-1);
+        fscanf(input, "%d", &f1);
+        fields[f1-1]++;
+        fscanf(input, "%d", &f2);
+        fields[f2-1]++;
     }
     fclose(input);
-
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            printf("i: %d, j: %d, value: %d\n", i, j, fields[i][j]);
-        }
-    }
-
     int max = 0;
     for (int i = 0; i < N; i++) 
-        if ((size_t) max < fields[i].size())
-            max = fields[i].size();
+        max = std::max(max, fields[i]);
 
     FILE *output = fopen("planting.out", "w");
     fprintf(output, "%d\n", max);
